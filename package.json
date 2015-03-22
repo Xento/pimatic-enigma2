@@ -1,0 +1,28 @@
+{
+  "name": "pimatic-enigma2",
+  "description": "Plugin to control a linux receiver with enigma2 or openwebif webinterface",
+  "author": "Markus Minini",
+  "main": "enigma2",
+  "files": [
+    "enigma2.coffee",
+    "README.md",
+    "enigma2-config-schema.coffee"
+  ],
+  "version": "0.1.0",
+  "homepage": "",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Xento/pimatic-enigma2"
+  },
+  "configSchema": "enigma2-config-schema.coffee",
+  "dependencies": {
+    "Restler": "3.2.2"
+  },
+  "peerDependencies": {
+    "pimatic": "0.8.*"
+  },
+  "engines": {
+    "node": ">0.8.x",
+    "npm": ">1.1.x"
+  }
+}
