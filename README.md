@@ -24,3 +24,5 @@ Example:
     if it is 08:00 tv-message message:"Good morning Dave!" [messagetype:"info"] [timeout: 30]
 
 
+I invite everybody to contribute to this plugin.
+Here you can find the api of the webinterface http://dream.reichholf.net/e2web/.
