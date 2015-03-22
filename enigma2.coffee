@@ -50,7 +50,7 @@ module.exports = (env) ->
       messagetype = defaultMessagetype
       messageTokens = ['""']
       
-      setTimeout = (m, d) => timeout = d
+      setTimeout2 = (m, d) => timeout = d
       setMessagetype = (m, t) => messagetype = t
       setMessage = (m, tokens) => messageTokens = tokens
 
@@ -58,13 +58,13 @@ module.exports = (env) ->
         .match('send ', optional: yes)
         .match(['tv-message'])
 
-      next = m.match(' timeout:').matchNumber(setTimeout)
-      if next.hadMatch() then m = next
-
       next = m.match(' message:').matchStringWithVars(setMessage)
       if next.hadMatch() then m = next
 
       next = m.match(' messagetype:').matchStringWithVars(setMessagetype)
+      if next.hadMatch() then m = next
+      
+      next = m.match(' timeout:').matchNumber(setTimeout2)
       if next.hadMatch() then m = next
 
       if m.hadMatch()
