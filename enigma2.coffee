@@ -51,7 +51,7 @@ module.exports = (env) ->
       messageTokens = ['""']
       
       setTimeout2 = (m, d) => timeout = d
-      setMessagetype = (m, t) => messagetype = t
+      setMessagetype = (m, tokens) => messagetype = tokens
       setMessage = (m, tokens) => messageTokens = tokens
 
       m = M(input, context)
@@ -87,8 +87,9 @@ module.exports = (env) ->
 
     executeAction: (simulate, context) ->
       Promise.all( [
-        @framework.variableManager.evaluateStringExpression(@messageTokens)
-      ]).then( ([message]) =>
+        @framework.variableManager.evaluateStringExpression(@messageTokens),
+        @framework.variableManager.evaluateStringExpression(@messagetype)
+      ]).then( ([message, messagetype]) =>
         if simulate
           # just return a promise fulfilled with a description about what we would do.
           return __("would send message \"%s\" with type \"%s\" and timeout \"%s\"", message, messagetype, timeout)
@@ -98,17 +99,16 @@ module.exports = (env) ->
           if user? and user.length > 0
             UserPassword = user + ":" + password + "@"
           
-          messagetype = @messagetype
           timeout = @timeout
           
           mtype = 2
-          if messagetype == "info"
+          if messagetype is "info"
             mtype = 2
-          else if messagetype == "warning"
+          else if messagetype is "warning"
             mtype = 3
-          else if messagetype == "error"
+          else if messagetype is "error"
             mtype = 1
-          else if messagetype == "question"
+          else if messagetype is "question"
             mtype = 0
             
           env.logger.debug "enigma2: messagetype= #{messagetype} #{mtype}"
