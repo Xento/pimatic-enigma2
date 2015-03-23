@@ -47,7 +47,7 @@ module.exports = (env) ->
       strToTokens = (str) => ["\"#{str}\""]
 
       timeout = defaultTimeout
-      messagetype = defaultMessagetype
+      messagetype = strToTokens defaultMessagetype
       messageTokens = ['""']
       
       setTimeout2 = (m, d) => timeout = d
