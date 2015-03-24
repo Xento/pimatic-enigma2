@@ -48,7 +48,7 @@ module.exports = (env) ->
 
       timeout = defaultTimeout
       messagetype = strToTokens defaultMessagetype
-      messageTokens = ['""']
+      messageTokens = strToTokens ""
       
       setTimeout2 = (m, d) => timeout = d
       setMessagetype = (m, tokens) => messagetype = tokens
@@ -69,8 +69,6 @@ module.exports = (env) ->
 
       if m.hadMatch()
         match = m.getFullMatch()
-
-        assert Array.isArray(messageTokens)
 
         return {
           token: match
@@ -105,9 +103,9 @@ module.exports = (env) ->
           if messagetype is "info"
             mtype = 2
           else if messagetype is "warning"
-            mtype = 3
-          else if messagetype is "error"
             mtype = 1
+          else if messagetype is "error"
+            mtype = 3
           else if messagetype is "question"
             mtype = 0
             
@@ -116,7 +114,7 @@ module.exports = (env) ->
           env.logger.debug "enigma2: message= #{message}"
 
           Restler.post('http://'+UserPassword+ip+'/web/message', data:{ text: message, type: mtype, timeout: timeout}).on 'complete', (data, response) ->
-              if response.statusCode == 201
+              if reponse? and response.statusCode == 201
                 return "Message send successfully"
               else
                 return "Error when sending message " + response.statusCode
