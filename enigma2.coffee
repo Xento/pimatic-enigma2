@@ -113,11 +113,18 @@ module.exports = (env) ->
           env.logger.debug "enigma2: timeout= #{timeout}"
           env.logger.debug "enigma2: message= #{message}"
 
-          Restler.post('http://'+UserPassword+ip+'/web/message', data:{ text: message, type: mtype, timeout: timeout}).on 'complete', (data, response) ->
-              if reponse? and response.statusCode == 201
-                return "Message send successfully"
+          StatusMessage = "Message send.";
+		  
+          # don't know how to return the status message from async call here
+          Restler.post('http://'+UserPassword+ip+'/web/message', data:{ text: message, type: mtype, timeout: timeout}).on 'success', (data, response) ->
+              if response isnt 'error' and response.statusCode == 201
+                StatusMessage = "Message send successfully"
+                return;
               else
-                return "Error when sending message " + response.statusCode
+                StatusMessage = "Error when sending message " + response.statusCode
+                return;
+				
+          return StatusMessage;
       )
 
   module.exports.enigma2MessageActionHandler = enigma2MessageActionHandler
