@@ -8,7 +8,7 @@
     "README.md",
     "enigma2-config-schema.coffee"
   ],
-  "version": "0.1.1",
+  "version": "0.1.2",
   "homepage": "",
   "repository": {
     "type": "git",
